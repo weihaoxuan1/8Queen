@@ -39,10 +39,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>E:/Unity3D4.6/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>F:/Unity4.6/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>E:/Unity3D4.6/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>F:/Unity4.6/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -188,9 +188,11 @@
      <Compile Include="Assets\mike\Scripts\Design\Instance\MainDirector.cs" />
      <Compile Include="Assets\mike\Scripts\Design\Instance\PlayerAnswerRecorder.cs" />
      <Compile Include="Assets\mike\Scripts\Design\Instance\StandardAnswerRecorder.cs" />
+     <Compile Include="Assets\mike\Scripts\Design\Instance\UserManager.cs" />
      <Compile Include="Assets\mike\Scripts\Design\UI\UI_Gaming.cs" />
      <Compile Include="Assets\mike\Scripts\Design\UI\UI_PlayerAnswer.cs" />
      <Compile Include="Assets\mike\Scripts\Design\UI\UI_SelectChessboard.cs" />
+     <Compile Include="Assets\mike\Scripts\Design\UI\UI_UserSystem.cs" />
      <Compile Include="Assets\mike\Scripts\EightQueen.cs" />
      <Compile Include="Assets\mike\Scripts\TestEightQueen2.cs" />
      <Compile Include="Assets\xuan\Scripts\Lock.cs" />
@@ -311,7 +313,7 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlurAndFlares.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendForBloom.shader" />
  <Reference Include="UnityEngine.UI">
- <HintPath>E:/Unity3D4.6/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
+ <HintPath>F:/Unity4.6/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

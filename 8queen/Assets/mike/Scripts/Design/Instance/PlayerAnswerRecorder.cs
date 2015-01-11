@@ -30,12 +30,19 @@ public class PlayerAnswerRecorder : MonoBehaviour
 		List<ChessmanInfo[]> myAnswers = new List<ChessmanInfo[]> ();
 		
 		string line;
+		string path = Application.dataPath + "//" + UserManager.Instance.GetUserDirectory() + "//" +
+			UserManager.Instance.GetCurUser() + "//" + "MyAnswer_" + size;
 		StreamReader sr = null;
 
-        if (File.Exists(Application.dataPath + "//" + "MyAnswer_" + size))
-            sr = File.OpenText(Application.dataPath + "//" + "MyAnswer_" + size);
+		if (File.Exists (path)) 
+		{
+			sr = File.OpenText (path);
+		}
+
         else
+		{
             return;
+		}
 		
 		while ((line = sr.ReadLine()) != null) 
 		{
@@ -140,7 +147,8 @@ public class PlayerAnswerRecorder : MonoBehaviour
         */
 		
 		StreamWriter sw;
-		FileInfo fileInfo = new FileInfo (Application.dataPath + "//" + "MyAnswer_" + chessmanInfos.Count);
+		FileInfo fileInfo = new FileInfo (Application.dataPath + "//" + UserManager.Instance.GetUserDirectory() + "//" +
+		                                  UserManager.Instance.GetCurUser() + "//" + "MyAnswer_" + chessmanInfos.Count);
 		
 		if (!fileInfo.Exists) 
 		{

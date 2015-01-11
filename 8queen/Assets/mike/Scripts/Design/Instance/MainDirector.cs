@@ -29,7 +29,8 @@ public class MainDirector : MonoBehaviour
 		playerAnswerUI = manage.transform.FindChild ("PlayerAnswerUI").gameObject;
         finishUI = gamingUI.transform.FindChild("FinishUI").gameObject;
         duplicateUI = gamingUI.transform.FindChild("DuplicateUI").gameObject;
-        //ToBeginUI();
+
+        ToBeginUI();
 	}
 
 	private void CloseAllUI()
