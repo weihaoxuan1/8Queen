@@ -90,7 +90,6 @@ public class ChessRoot : MonoBehaviour
 				int row = cubeInfo.row;
 				
 				//检查点击的位置是否已经放置了棋子
-				//foreach(ChessmanInfo info in mChessmanInfos) 
 				for(int i=0; i<mChessmanInfos.Count; i++)
 				{
 					ChessmanInfo info = (ChessmanInfo)mChessmanInfos.ToArray().GetValue(i);
@@ -99,9 +98,8 @@ public class ChessRoot : MonoBehaviour
 					if(info.line == line && info.row == row && info.canBeRemove) 
 					{
 						GameObject.Destroy(info.chessman);
-
-						//mChessmanInfos.Remove(info);
 						mChessmanInfos.RemoveAt(i);
+						SoundManager.Instance.PlayDropChessmanSound();
 
 						return;
 					}
@@ -116,12 +114,14 @@ public class ChessRoot : MonoBehaviour
 				mChessman.transform.parent = mChessmans.transform;
 				ChessmanInfo newInfo = new ChessmanInfo(line, row, true, mChessman);
 				mChessmanInfos.Add(newInfo);
+				SoundManager.Instance.PlaySetChessmanSound();
 
 				//若放置的棋子不合法,在提示完毕后去除该棋子
 				if(!CheckChessmans(mChessmanInfos))
 				{
 					ForbidSetChessman();
 					Invoke("RemoveLastChessman", mChessman.GetComponent<TwinkleEffect>().GetTotalTwinkleTime());
+					SoundManager.Instance.PlayMakeMistakeSound();
 				}
 
 				//若放置的棋子合法,并且达到所需棋子数量,游戏胜利
@@ -134,6 +134,7 @@ public class ChessRoot : MonoBehaviour
                         {
                             PlayerAnswerRecorder.Instance.WriteAnswer(mChessmanInfos);
                             MainDirector.Instance.ShowFinishUI();
+							SoundManager.Instance.PlayNewAnswerSound();
                             ForbidSetChessman();
                         }
 
@@ -141,6 +142,7 @@ public class ChessRoot : MonoBehaviour
                         else
                         {
                             MainDirector.Instance.ShowDuplicateUI();
+							SoundManager.Instance.PlayDuplicateAnswerSound();
                             ForbidSetChessman();
                         }
 						
@@ -445,7 +447,7 @@ public class ChessRoot : MonoBehaviour
 		if (isClockWise) 
 		{
 			transform.RotateAround(centerPos, Vector3.up, rotateSpeed * Time.deltaTime);
-            scene.transform.RotateAround(centerPos, Vector3.up, rotateSpeed * Time.deltaTime);
+			scene.transform.RotateAround(centerPos, Vector3.up, rotateSpeed * Time.deltaTime);
 		}
 
 		//逆时针旋转

@@ -6,6 +6,9 @@ public class OnHover : MonoBehaviour
 
     UIButton button;
     public GameObject showWhileHover;
+
+	private bool isPlayedHoverSound = false;  //是否播放过鼠标悬停的音效
+
 	// Use this for initialization
 	void Start () {
         button = gameObject.GetComponent<UIButton>();
@@ -15,12 +18,27 @@ public class OnHover : MonoBehaviour
 	void Update () {
 	    if(button.state == UIButtonColor.State.Hover)
         {
-            showWhileHover.SetActive(true);
-            //onBackToMainHover.transform.localPosition = Input.mousePosition;
+			if(showWhileHover != null)
+			{
+				showWhileHover.SetActive(true);
+				//onBackToMainHover.transform.localPosition = Input.mousePosition;
+			}
+
+			//防止鼠标悬停时一直播放声音
+			if(!isPlayedHoverSound)
+			{
+				SoundManager.Instance.PlayHoverButtonSound();
+				isPlayedHoverSound = true;
+			}
         }
         else
         {
-            showWhileHover.SetActive(false);
+			if(showWhileHover != null)
+			{
+				showWhileHover.SetActive(false);
+			}
+            
+			isPlayedHoverSound = false;
         }
 	}
 }
