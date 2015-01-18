@@ -91,4 +91,17 @@ public class MainDirector : MonoBehaviour
     {
         duplicateUI.SetActive(false);
     }
+
+	//延迟调用ShowFinishUI()方法,是为了解决放置最后一个棋子的同时按钮被点击的问题
+	public void ShowFinishUI_delay(float delay)
+	{
+		Invoke ("ShowFinishUI", delay);
+	}
+
+	//延迟调用ShowDuplicateUI()方法，目的同上
+	public void ShowDuplicateUI_delay(float delay)
+	{
+		Invoke ("ShowDuplicateUI", delay);
+	}
+	
 }

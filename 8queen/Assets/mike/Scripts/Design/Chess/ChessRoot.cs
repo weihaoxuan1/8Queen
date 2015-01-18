@@ -94,12 +94,16 @@ public class ChessRoot : MonoBehaviour
 				{
 					ChessmanInfo info = (ChessmanInfo)mChessmanInfos.ToArray().GetValue(i);
 
-					//若已经放置棋子并且该棋子能被玩家拿掉,则去掉棋子,并删除记录
-					if(info.line == line && info.row == row && info.canBeRemove) 
+					//若已经放置棋子
+					if(info.line == line && info.row == row) 
 					{
-						GameObject.Destroy(info.chessman);
-						mChessmanInfos.RemoveAt(i);
-						SoundManager.Instance.PlayDropChessmanSound();
+						//若该棋子能被玩家拿掉,则去掉棋子,并删除记录
+						if(info.canBeRemove)
+						{
+							GameObject.Destroy(info.chessman);
+							mChessmanInfos.RemoveAt(i);
+							SoundManager.Instance.PlayDropChessmanSound();
+						}
 
 						return;
 					}
@@ -133,7 +137,10 @@ public class ChessRoot : MonoBehaviour
                         if (CheckAnswerRepeat(mChessmanInfos.ToArray()))
                         {
                             PlayerAnswerRecorder.Instance.WriteAnswer(mChessmanInfos);
-                            MainDirector.Instance.ShowFinishUI();
+
+                            //MainDirector.Instance.ShowFinishUI();
+							MainDirector.Instance.ShowFinishUI_delay(0.1f);
+
 							SoundManager.Instance.PlayNewAnswerSound();
                             ForbidSetChessman();
                         }
@@ -141,7 +148,9 @@ public class ChessRoot : MonoBehaviour
                         //当前解之前解出过
                         else
                         {
-                            MainDirector.Instance.ShowDuplicateUI();
+                            //MainDirector.Instance.ShowDuplicateUI();
+							MainDirector.Instance.ShowDuplicateUI_delay(0.1f);
+
 							SoundManager.Instance.PlayDuplicateAnswerSound();
                             ForbidSetChessman();
                         }
