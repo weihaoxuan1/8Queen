@@ -121,6 +121,7 @@ public class UISelect : MonoBehaviour {
 	{
 		StartChess (4);
         ReplacedNum num = rank4.GetComponent<ReplacedNum>();
+		UserSelectRecorder.Instance.SetReplaceNum (num.GetReplacedNum());
         ChessmanInfo[] info = StandardAnswerRecorder.Instance.GetRandomChessmanInfos(4, num.GetReplacedNum());
         ChessRoot.Instance.SetUnremovableChessman(info);
 	}
@@ -129,6 +130,7 @@ public class UISelect : MonoBehaviour {
 	{
 		StartChess (5);
         ReplacedNum num = rank5.GetComponent<ReplacedNum>();
+		UserSelectRecorder.Instance.SetReplaceNum (num.GetReplacedNum());
         ChessmanInfo[] info = StandardAnswerRecorder.Instance.GetRandomChessmanInfos(5, num.GetReplacedNum());
         ChessRoot.Instance.SetUnremovableChessman(info);
 	}
@@ -137,6 +139,7 @@ public class UISelect : MonoBehaviour {
 	{
 		StartChess (6);
         ReplacedNum num = rank6.GetComponent<ReplacedNum>();
+		UserSelectRecorder.Instance.SetReplaceNum (num.GetReplacedNum());
         ChessmanInfo[] info = StandardAnswerRecorder.Instance.GetRandomChessmanInfos(6, num.GetReplacedNum());
         ChessRoot.Instance.SetUnremovableChessman(info);
 	}
@@ -145,6 +148,7 @@ public class UISelect : MonoBehaviour {
 	{
 		StartChess (7);
         ReplacedNum num = rank7.GetComponent<ReplacedNum>();
+		UserSelectRecorder.Instance.SetReplaceNum (num.GetReplacedNum());
         ChessmanInfo[] info = StandardAnswerRecorder.Instance.GetRandomChessmanInfos(7, num.GetReplacedNum());
         ChessRoot.Instance.SetUnremovableChessman(info);
 	}
@@ -153,6 +157,7 @@ public class UISelect : MonoBehaviour {
 	{
 		StartChess (8);
         ReplacedNum num = rank8.GetComponent<ReplacedNum>();
+		UserSelectRecorder.Instance.SetReplaceNum (num.GetReplacedNum());
         ChessmanInfo[] info = StandardAnswerRecorder.Instance.GetRandomChessmanInfos(8, num.GetReplacedNum());
         ChessRoot.Instance.SetUnremovableChessman(info);
 	}

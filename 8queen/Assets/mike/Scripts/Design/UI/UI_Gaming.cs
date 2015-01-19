@@ -130,4 +130,16 @@ public class UI_Gaming : MonoBehaviour
         ShowPlayerAnswer(ChessRoot.Instance.GetChessboardSize());
     }
 
+	/*
+	 * 重置为玩家预先放置的棋子
+	 */ 
+	public void ResetUnremovableChessmans()
+	{
+		int chessboardSize = ChessRoot.Instance.GetChessboardSize ();
+		int replaceNum = UserSelectRecorder.Instance.GetReplaceNum ();
+		ChessRoot.Instance.ClearAllChessmans (true);
+		ChessmanInfo[] info = StandardAnswerRecorder.Instance.GetRandomChessmanInfos(chessboardSize, replaceNum);
+		ChessRoot.Instance.SetUnremovableChessman(info);
+	}
+
 }

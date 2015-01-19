@@ -190,6 +190,7 @@
      <Compile Include="Assets\mike\Scripts\Design\Instance\SoundManager.cs" />
      <Compile Include="Assets\mike\Scripts\Design\Instance\StandardAnswerRecorder.cs" />
      <Compile Include="Assets\mike\Scripts\Design\Instance\UserManager.cs" />
+     <Compile Include="Assets\mike\Scripts\Design\Instance\UserSelectRecorder.cs" />
      <Compile Include="Assets\mike\Scripts\Design\UI\UI_Gaming.cs" />
      <Compile Include="Assets\mike\Scripts\Design\UI\UI_PlayerAnswer.cs" />
      <Compile Include="Assets\mike\Scripts\Design\UI\UI_SelectChessboard.cs" />
