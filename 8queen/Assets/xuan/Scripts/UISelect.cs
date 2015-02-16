@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -121,7 +121,9 @@ public class UISelect : MonoBehaviour {
 	{
 		StartChess (4);
         ReplacedNum num = rank4.GetComponent<ReplacedNum>();
-		UserSelectRecorder.Instance.SetReplaceNum (num.GetReplacedNum());
+		UserBehaviorRecorder.Instance.Init ();
+		UserBehaviorRecorder.Instance.SetReplaceNum (num.GetReplacedNum());
+		ScoreManager.Instance.StartTimer ();
         ChessmanInfo[] info = StandardAnswerRecorder.Instance.GetRandomChessmanInfos(4, num.GetReplacedNum());
         ChessRoot.Instance.SetUnremovableChessman(info);
 	}
@@ -130,7 +132,9 @@ public class UISelect : MonoBehaviour {
 	{
 		StartChess (5);
         ReplacedNum num = rank5.GetComponent<ReplacedNum>();
-		UserSelectRecorder.Instance.SetReplaceNum (num.GetReplacedNum());
+		UserBehaviorRecorder.Instance.Init ();
+		UserBehaviorRecorder.Instance.SetReplaceNum (num.GetReplacedNum());
+		ScoreManager.Instance.StartTimer ();
         ChessmanInfo[] info = StandardAnswerRecorder.Instance.GetRandomChessmanInfos(5, num.GetReplacedNum());
         ChessRoot.Instance.SetUnremovableChessman(info);
 	}
@@ -139,7 +143,9 @@ public class UISelect : MonoBehaviour {
 	{
 		StartChess (6);
         ReplacedNum num = rank6.GetComponent<ReplacedNum>();
-		UserSelectRecorder.Instance.SetReplaceNum (num.GetReplacedNum());
+		UserBehaviorRecorder.Instance.Init ();
+		UserBehaviorRecorder.Instance.SetReplaceNum (num.GetReplacedNum());
+		ScoreManager.Instance.StartTimer ();
         ChessmanInfo[] info = StandardAnswerRecorder.Instance.GetRandomChessmanInfos(6, num.GetReplacedNum());
         ChessRoot.Instance.SetUnremovableChessman(info);
 	}
@@ -148,7 +154,9 @@ public class UISelect : MonoBehaviour {
 	{
 		StartChess (7);
         ReplacedNum num = rank7.GetComponent<ReplacedNum>();
-		UserSelectRecorder.Instance.SetReplaceNum (num.GetReplacedNum());
+		UserBehaviorRecorder.Instance.Init ();
+		UserBehaviorRecorder.Instance.SetReplaceNum (num.GetReplacedNum());
+		ScoreManager.Instance.StartTimer ();
         ChessmanInfo[] info = StandardAnswerRecorder.Instance.GetRandomChessmanInfos(7, num.GetReplacedNum());
         ChessRoot.Instance.SetUnremovableChessman(info);
 	}
@@ -157,7 +165,9 @@ public class UISelect : MonoBehaviour {
 	{
 		StartChess (8);
         ReplacedNum num = rank8.GetComponent<ReplacedNum>();
-		UserSelectRecorder.Instance.SetReplaceNum (num.GetReplacedNum());
+		UserBehaviorRecorder.Instance.Init ();
+		UserBehaviorRecorder.Instance.SetReplaceNum (num.GetReplacedNum());
+		ScoreManager.Instance.StartTimer ();
         ChessmanInfo[] info = StandardAnswerRecorder.Instance.GetRandomChessmanInfos(8, num.GetReplacedNum());
         ChessRoot.Instance.SetUnremovableChessman(info);
 	}
@@ -214,7 +224,7 @@ public class UISelect : MonoBehaviour {
         //玩家尚未解出答案
         if (playerAnswer == null)
         {
-            Debug.Log("尚未解出" + chessboardSize + "*" + chessboardSize + "棋盘规模的答案");
+            //Debug.Log("尚未解出" + chessboardSize + "*" + chessboardSize + "棋盘规模的答案");
             noFinishedAnswer.SetActive(false);
             noFinishedAnswer.SetActive(true);
             return;

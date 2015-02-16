@@ -1,16 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\xuan\Scripts\UISelect.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\mike\Scripts\Design\Instance\ScoreManager.cs">
     <Files>
-      <File FileName="Assets\mike\Scripts\Design\Chess\ChessRoot.cs" Line="97" Column="15" />
-      <File FileName="Assets\mike\Scripts\Design\Instance\UserManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\mike\Scripts\Design\Instance\MainDirector.cs" Line="1" Column="1" />
-      <File FileName="Assets\mike\Scripts\Design\Instance\PlayerAnswerRecorder.cs" Line="1" Column="1" />
-      <File FileName="Assets\mike\Scripts\Design\UI\UI_UserSystem.cs" Line="1" Column="1" />
-      <File FileName="Assets\mike\Scripts\Design\Instance\SoundManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\xuan\Scripts\OnHover.cs" Line="1" Column="1" />
-      <File FileName="Assets\xuan\Scripts\UISelect.cs" Line="124" Column="1" />
-      <File FileName="Assets\mike\Scripts\Design\Instance\UserSelectRecorder.cs" Line="14" Column="2" />
+      <File FileName="Assets\mike\Scripts\Design\Instance\ScoreManager.cs" Line="43" Column="59" />
+      <File FileName="Assets\mike\Scripts\Design\Chess\ChessRoot.cs" Line="154" Column="43" />
+      <File FileName="Assets\mike\Scripts\Design\Instance\UserBehaviorRecorder.cs" Line="18" Column="21" />
+      <File FileName="Assets\mike\Scripts\Design\UI\UI_Gaming.cs" Line="114" Column="15" />
+      <File FileName="Assets\xuan\Scripts\UISelect.cs" Line="170" Column="39" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

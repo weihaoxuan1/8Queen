@@ -126,6 +126,7 @@ public class ChessRoot : MonoBehaviour
 					ForbidSetChessman();
 					Invoke("RemoveLastChessman", mChessman.GetComponent<TwinkleEffect>().GetTotalTwinkleTime());
 					SoundManager.Instance.PlayMakeMistakeSound();
+					UserBehaviorRecorder.Instance.OneWrongStep();
 				}
 
 				//若放置的棋子合法,并且达到所需棋子数量,游戏胜利
@@ -133,25 +134,24 @@ public class ChessRoot : MonoBehaviour
 				{
 					if(mChessmanInfos.Count == chessboardSize)
 					{
+						ScoreManager.Instance.StopTimer();
+
                         //当前解之前没有解出过
                         if (CheckAnswerRepeat(mChessmanInfos.ToArray()))
                         {
                             PlayerAnswerRecorder.Instance.WriteAnswer(mChessmanInfos);
-
-                            //MainDirector.Instance.ShowFinishUI();
 							MainDirector.Instance.ShowFinishUI_delay(0.1f);
-
 							SoundManager.Instance.PlayNewAnswerSound();
+							ScoreManager.Instance.CalScore(false);
                             ForbidSetChessman();
                         }
 
                         //当前解之前解出过
                         else
                         {
-                            //MainDirector.Instance.ShowDuplicateUI();
 							MainDirector.Instance.ShowDuplicateUI_delay(0.1f);
-
 							SoundManager.Instance.PlayDuplicateAnswerSound();
+							ScoreManager.Instance.CalScore(true);
                             ForbidSetChessman();
                         }
 						

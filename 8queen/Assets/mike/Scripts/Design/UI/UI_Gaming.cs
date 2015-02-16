@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -111,7 +111,7 @@ public class UI_Gaming : MonoBehaviour
         //玩家尚未解出答案
         if (playerAnswer == null)
         {
-            Debug.Log("尚未解出" + chessboardSize + "*" + chessboardSize + "棋盘规模的答案");
+            //Debug.Log("尚未解出" + chessboardSize + "*" + chessboardSize + "棋盘规模的答案");
             //noFinishedAnswer.SetActive(true);
             return;
         }
@@ -136,7 +136,7 @@ public class UI_Gaming : MonoBehaviour
 	public void ResetUnremovableChessmans()
 	{
 		int chessboardSize = ChessRoot.Instance.GetChessboardSize ();
-		int replaceNum = UserSelectRecorder.Instance.GetReplaceNum ();
+		int replaceNum = UserBehaviorRecorder.Instance.GetReplaceNum ();
 		ChessRoot.Instance.ClearAllChessmans (true);
 		ChessmanInfo[] info = StandardAnswerRecorder.Instance.GetRandomChessmanInfos(chessboardSize, replaceNum);
 		ChessRoot.Instance.SetUnremovableChessman(info);
