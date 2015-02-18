@@ -9,6 +9,9 @@ public class ScoreManager : MonoBehaviour
 	private int duplicateScore;  //解出重复摆法的基本得分
 	private int finishScore;     //解出新的摆法的基本得分
 
+	private int starNum;       //星级数量
+	private bool hasHalfStar;  //是否需要半星
+
 	private bool isStartTimer;
 	private float timer;
 
@@ -34,8 +37,11 @@ public class ScoreManager : MonoBehaviour
 
 	void Awake()
 	{
-		duplicateScore = 1000;
+		duplicateScore = 1500;
 		finishScore    = 2000;
+
+		starNum = 0;
+		hasHalfStar = false;
 
 		isStartTimer = false;
 		timer = 0.0f;
@@ -53,15 +59,125 @@ public class ScoreManager : MonoBehaviour
 		}
 	}
 
-	public void StartTimer()
+	/*
+	 * 计算星级
+	 */ 
+	private void CalStarNum()
 	{
-		timer = 0.0f;
-		isStartTimer = true;
-	}
+		int chessboardSize = ChessRoot.Instance.GetChessboardSize ();
 
-	public void StopTimer()
-	{
-		isStartTimer = false;
+		float curScore = finalScore;  //当前得分
+		float theoryScore = 0.0f;     //理论得分
+		float scoreRatio = 0.0f;      //当前得分占理论得分的百分比
+
+		int basicScore = 0;  //基本得分
+		int errorFreeReward = 0;  //无错奖励
+		float chessboardSizeRatio = 0.0f;  //棋盘规模系数
+
+		basicScore = finishScore;
+		errorFreeReward = chessboardSize * 100;
+
+		//根据棋盘规模计算棋盘系数规模
+		if (chessboardSize == 4) 
+		{
+			chessboardSizeRatio = chessboardSizeRatios[(int)ChessboardSizeIndex.four];
+		}
+		
+		else if (chessboardSize == 5) 
+		{
+			chessboardSizeRatio = chessboardSizeRatios[(int)ChessboardSizeIndex.five];
+		}
+		
+		else if (chessboardSize == 6) 
+		{
+			chessboardSizeRatio = chessboardSizeRatios[(int)ChessboardSizeIndex.six];
+		}
+		
+		else if (chessboardSize == 7) 
+		{
+			chessboardSizeRatio = chessboardSizeRatios[(int)ChessboardSizeIndex.seven];
+		}
+		
+		else if (chessboardSize == 8) 
+		{
+			chessboardSizeRatio = chessboardSizeRatios[(int)ChessboardSizeIndex.eight];
+		}
+		
+		else
+		{
+			Debug.LogError("chessboardSize is illegal");
+		}
+
+		//计算理论得分以及当前得分占理论得分的百分比
+Debug.Log (basicScore + " " + chessboardSizeRatio + " " + errorFreeReward);
+		theoryScore = basicScore * chessboardSizeRatio + errorFreeReward;
+		scoreRatio = curScore / theoryScore;
+
+		//根据当前得分占理论得分的百分比计算星级
+		if (scoreRatio >= 0.95) 
+		{
+			starNum = 5;
+			hasHalfStar = false;
+		}
+
+		else if(scoreRatio >= 0.9)
+		{
+			starNum = 4;
+			hasHalfStar = true;
+		}
+
+		else if(scoreRatio >= 0.85)
+		{
+			starNum = 4;
+			hasHalfStar = false;
+		}
+
+		else if(scoreRatio >= 0.8)
+		{
+			starNum = 3;
+			hasHalfStar = true;
+		}
+
+		else if(scoreRatio >= 0.75)
+		{
+			starNum = 3;
+			hasHalfStar = false;
+		}
+
+		else if(scoreRatio >= 0.7)
+		{
+			starNum = 2;
+			hasHalfStar = true;
+		}
+
+		else if(scoreRatio >= 0.65)
+		{
+			starNum = 2;
+			hasHalfStar = false;
+		}
+
+		else if(scoreRatio >= 0.6)
+		{
+			starNum = 1;
+			hasHalfStar = true;
+		}
+
+		else if(scoreRatio >= 0.55)
+		{
+			starNum = 1;
+			hasHalfStar = false;
+		}
+
+		else
+		{
+			starNum = 0;
+			hasHalfStar = true;
+		}
+
+Debug.Log ("理论得分： " + theoryScore);
+Debug.Log ("百分比： " + scoreRatio);
+Debug.Log ("星级： " + starNum);
+Debug.Log ("是否存在半星： " + hasHalfStar);
 	}
 
 	/*
@@ -148,6 +264,9 @@ public class ScoreManager : MonoBehaviour
 		finalScore = (int)((basicScore * chessboardSizeRatio + errorFreeReward) * (1 + timeReward) * 
 						(chessboardSize - replaceNum) / chessboardSize);
 
+		//计算星级
+		CalStarNum ();
+
 Debug.Log ("基本得分： " + basicScore);
 Debug.Log ("棋盘规模系数： " + chessboardSizeRatio);
 Debug.Log ("无错奖励： " + errorFreeReward);
@@ -157,12 +276,30 @@ Debug.Log ("预放棋子系数： " + (chessboardSize - replaceNum) + " / " + ch
 Debug.Log ("最终得分： " + finalScore);
 	}
 
-	/*
-	 * 计算得分
-	 */ 
+	public void StartTimer()
+	{
+		timer = 0.0f;
+		isStartTimer = true;
+	}
+	
+	public void StopTimer()
+	{
+		isStartTimer = false;
+	}
+
 	public int GetFinalScore()
 	{
 		return finalScore;
+	}
+
+	public int GetStarNum()
+	{
+		return starNum;
+	}
+
+	public bool GetHasHalfStar()
+	{
+		return hasHalfStar;
 	}
 
 }

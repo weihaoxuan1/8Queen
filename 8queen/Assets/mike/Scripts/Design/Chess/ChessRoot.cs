@@ -143,6 +143,7 @@ public class ChessRoot : MonoBehaviour
 							MainDirector.Instance.ShowFinishUI_delay(0.1f);
 							SoundManager.Instance.PlayNewAnswerSound();
 							ScoreManager.Instance.CalScore(false);
+							MainDirector.Instance.ShowBalanceUI();
                             ForbidSetChessman();
                         }
 
@@ -152,6 +153,7 @@ public class ChessRoot : MonoBehaviour
 							MainDirector.Instance.ShowDuplicateUI_delay(0.1f);
 							SoundManager.Instance.PlayDuplicateAnswerSound();
 							ScoreManager.Instance.CalScore(true);
+							MainDirector.Instance.ShowBalanceUI();
                             ForbidSetChessman();
                         }
 						

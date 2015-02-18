@@ -12,6 +12,7 @@ public class MainDirector : MonoBehaviour
     private GameObject finishUI;
     private GameObject duplicateUI;
     private GameObject playerAnswerUI;
+	private GameObject balanceUI;
 
 	MainDirector()
 	{
@@ -27,8 +28,10 @@ public class MainDirector : MonoBehaviour
 		selectChessboardUI = manage.transform.FindChild ("SelectUI").gameObject;
         gamingUI = manage.transform.FindChild("GamingUI").gameObject;
 		playerAnswerUI = manage.transform.FindChild ("PlayerAnswerUI").gameObject;
+		balanceUI = manage.transform.FindChild ("BalanceUI").gameObject;
         finishUI = gamingUI.transform.FindChild("FinishUI").gameObject;
         duplicateUI = gamingUI.transform.FindChild("DuplicateUI").gameObject;
+
 
         ToBeginUI();
 	}
@@ -40,6 +43,7 @@ public class MainDirector : MonoBehaviour
 		selectChessboardUI.SetActive (false);
 		gamingUI.SetActive (false);
 		playerAnswerUI.SetActive (false);
+		balanceUI.SetActive (false);
 	}
 
     public void ToBeginUI()
@@ -70,6 +74,11 @@ public class MainDirector : MonoBehaviour
 	{
 		CloseAllUI ();
 		playerAnswerUI.SetActive (true);
+	}
+
+	public void ShowBalanceUI()
+	{
+		balanceUI.SetActive (true);
 	}
 
     public void ShowFinishUI()

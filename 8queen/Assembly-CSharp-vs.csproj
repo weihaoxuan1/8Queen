@@ -192,10 +192,14 @@
      <Compile Include="Assets\mike\Scripts\Design\Instance\StandardAnswerRecorder.cs" />
      <Compile Include="Assets\mike\Scripts\Design\Instance\UserBehaviorRecorder.cs" />
      <Compile Include="Assets\mike\Scripts\Design\Instance\UserManager.cs" />
+     <Compile Include="Assets\mike\Scripts\Design\UI\UI_Balance.cs" />
      <Compile Include="Assets\mike\Scripts\Design\UI\UI_Gaming.cs" />
      <Compile Include="Assets\mike\Scripts\Design\UI\UI_PlayerAnswer.cs" />
      <Compile Include="Assets\mike\Scripts\Design\UI\UI_SelectChessboard.cs" />
      <Compile Include="Assets\mike\Scripts\Design\UI\UI_UserSystem.cs" />
+     <Compile Include="Assets\mike\Scripts\Design\Util\StarController.cs" />
+     <Compile Include="Assets\mike\Scripts\Design\Util\StarFade.cs" />
+     <Compile Include="Assets\mike\Scripts\Design\Util\StarScale.cs" />
      <Compile Include="Assets\mike\Scripts\EightQueen.cs" />
      <Compile Include="Assets\mike\Scripts\TestEightQueen2.cs" />
      <Compile Include="Assets\xuan\Scripts\Lock.cs" />
