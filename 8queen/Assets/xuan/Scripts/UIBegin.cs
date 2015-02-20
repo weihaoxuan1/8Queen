@@ -3,23 +3,34 @@ using System.Collections;
 
 public class UIBegin : MonoBehaviour
 {
+	private GameObject welcome;
+	private UILabel label_welcome;
 
+	void OnEnable()
+	{
+		if (welcome == null) 
+		{
+			welcome = transform.FindChild("Welcome").gameObject;
+		}
 
-    public GameObject onAchievement;
-	// Use this for initialization
-	void Start () {
-	
+		if (label_welcome == null) 
+		{
+			label_welcome = welcome.GetComponentInChildren<UILabel> ();
+		}
+
+		ShowWelcome ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
-    void OnDisable()
-    {
-        onAchievement.SetActive(false);
-    }
+	/*
+	 * 显示欢迎信息
+	 */ 
+	private void ShowWelcome()
+	{
+		string curUser = UserManager.Instance.GetCurUser ();
+		welcome.SetActive (false);
+		label_welcome.text = "欢迎游戏, " + curUser + " !";
+		welcome.SetActive (true);
+	}
 
     public void OnStart()
     {
@@ -31,14 +42,14 @@ public class UIBegin : MonoBehaviour
         MainDirector.Instance.ToInstuctionUI();
     }
 
-    public void OnAchievement()
+    public void OnUser()
     {
-        onAchievement.SetActive(false);
-        onAchievement.SetActive(true);
+       
     }
 
     public void OnQuit()
     {
         Application.Quit();
     }
+
 }

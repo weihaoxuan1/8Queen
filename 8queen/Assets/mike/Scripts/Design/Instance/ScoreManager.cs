@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+using System;
+using System.IO;
+
 public class ScoreManager : MonoBehaviour 
 {
 	public static ScoreManager Instance;
@@ -109,7 +112,6 @@ public class ScoreManager : MonoBehaviour
 		}
 
 		//计算理论得分以及当前得分占理论得分的百分比
-Debug.Log (basicScore + " " + chessboardSizeRatio + " " + errorFreeReward);
 		theoryScore = basicScore * chessboardSizeRatio + errorFreeReward;
 		scoreRatio = curScore / theoryScore;
 
@@ -173,11 +175,72 @@ Debug.Log (basicScore + " " + chessboardSizeRatio + " " + errorFreeReward);
 			starNum = 0;
 			hasHalfStar = true;
 		}
+	}
 
-Debug.Log ("理论得分： " + theoryScore);
-Debug.Log ("百分比： " + scoreRatio);
-Debug.Log ("星级： " + starNum);
-Debug.Log ("是否存在半星： " + hasHalfStar);
+	/*
+	 * 获取当前用户的最高得分
+	 */ 
+	private int GetBestScore(int chessboardSize)
+	{
+		//获取文件中的一行信息
+		string line;
+		string path = Application.dataPath + "//" + UserManager.Instance.GetUserDirectory() + "//" +
+			UserManager.Instance.GetCurUser() + "//" + "MyBestRecord_" + chessboardSize;
+		StreamReader sr = null;
+		
+		if (File.Exists (path)) 
+		{
+			sr = File.OpenText (path);
+		}
+
+		else
+		{
+			return 0;
+		}
+		
+		line = sr.ReadLine ();
+		
+		sr.Close();
+		sr.Dispose();
+
+		//将信息中的最高得分提取出来
+		int bestScore = 0;
+		string[] elements = line.Split(new char[]{','}, StringSplitOptions.RemoveEmptyEntries);
+
+		if (int.TryParse (elements [0], out bestScore)) 
+		{
+			return bestScore;
+		}
+
+		else
+		{
+			Debug.LogError("Error in parseInt");
+			return -1;
+		}
+	}
+
+	/*
+	 * 将用户的最高纪录写入文件中
+	 */ 
+	private void WriteBestRecord(int chessboardSize)
+	{
+		string message = finalScore + "," + starNum + "," + hasHalfStar;
+		
+		StreamWriter sw;
+		FileInfo fileInfo = new FileInfo (Application.dataPath + "//" + UserManager.Instance.GetUserDirectory() + "//" +
+		                                  UserManager.Instance.GetCurUser() + "//" + "MyBestRecord_" + chessboardSize);
+
+		//若存在记录文件,将记录文件删除后再重新创建
+		if (fileInfo.Exists) 
+		{
+			fileInfo.Delete();
+		}
+		
+		sw = fileInfo.CreateText ();
+	
+		sw.WriteLine (message);
+		sw.Close ();
+		sw.Dispose ();
 	}
 
 	/*
@@ -267,13 +330,13 @@ Debug.Log ("是否存在半星： " + hasHalfStar);
 		//计算星级
 		CalStarNum ();
 
-Debug.Log ("基本得分： " + basicScore);
-Debug.Log ("棋盘规模系数： " + chessboardSizeRatio);
-Debug.Log ("无错奖励： " + errorFreeReward);
-Debug.Log ("用时： " + timer);
-Debug.Log ("用时奖励加成系数： " + timeReward);
-Debug.Log ("预放棋子系数： " + (chessboardSize - replaceNum) + " / " + chessboardSize);
-Debug.Log ("最终得分： " + finalScore);
+		//记录最高得分和星级
+		int bestScore = GetBestScore (chessboardSize);
+
+		if (finalScore >= bestScore) 
+		{
+			WriteBestRecord(chessboardSize);
+		}
 	}
 
 	public void StartTimer()

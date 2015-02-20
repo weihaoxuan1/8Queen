@@ -181,6 +181,12 @@ public class ChessRoot : MonoBehaviour
             {
                 for (int j = 0; j < answer.Length; j++)
                 {
+if(infos[i] == null)
+	Debug.Log("空指针1： " + i);
+
+if(answer[j] == null)
+	Debug.Log("空指针2： " + j);
+
                     if (infos[i].line == answer[j].line && infos[i].row == answer[j].row)
                     {
                         //找到解集中的一组解与当前解相同

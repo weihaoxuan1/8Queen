@@ -3,30 +3,24 @@ using System.Collections;
 
 public class UI_UserSystem : MonoBehaviour 
 {
-	private UILabel label_curUser;
+	private UILabel label_userName;
 
-	void Enable()
+	void OnEnable()
 	{
-		if (label_curUser != null) 
+		if (label_userName == null) 
 		{
-			UpdateCurUser();
+			label_userName = transform.FindChild ("Text_userName").GetComponent<UILabel>();
 		}
+
+		Reset ();
 	}
 
-	void Start()
+	private void Reset()
 	{
-		label_curUser = transform.FindChild ("Label_curUser").GetComponent<UILabel>();
-
-		UpdateCurUser ();
-	}
-
-	/*
-	 * 更新当前用户名的显示
-	 */ 
-	private void UpdateCurUser()
-	{
+		//更新当前用户名
 		string curUser = UserManager.Instance.GetCurUser();
-		label_curUser.text = "Welcome Back, " + curUser + "!";
+		label_userName.text = curUser;
 	}
+
 
 }

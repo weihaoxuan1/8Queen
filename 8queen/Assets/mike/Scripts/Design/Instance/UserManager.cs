@@ -58,7 +58,7 @@ public class UserManager : MonoBehaviour
 		{
 			int lastAccessIndex = 0;
 
-			//找出最后一次访问时间最晚的文件夹
+			//找出最后一次访问的文件夹
 			for(int i=1; i<directories.Length; i++)
 			{
 				DateTime curTime = Directory.GetLastAccessTime(path + "//" + directories[i]);
