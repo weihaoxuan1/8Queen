@@ -44,7 +44,7 @@ public class UIBegin : MonoBehaviour
 
     public void OnUser()
     {
-       
+		MainDirector.Instance.ToUserSystemUI ();
     }
 
     public void OnQuit()

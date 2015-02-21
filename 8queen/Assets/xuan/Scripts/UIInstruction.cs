@@ -16,7 +16,7 @@ public class UIInstruction : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyUp(KeyCode.Mouse0) || Input.GetKeyUp(KeyCode.Mouse1))
+        if (Input.GetKeyUp(KeyCode.Mouse1))
         {
             MainDirector.Instance.ToBeginUI();
         }

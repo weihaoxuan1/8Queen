@@ -16,7 +16,8 @@ public class ChessRoot : MonoBehaviour
 	
 	private int chessboardSize;   //棋盘规格
 	private float cubeSize;       //组成棋盘表面的每个方格的边长
-	private float baseHeight;     //棋盘底座的高度
+	private float curBaseHeight;  //当前棋盘底座的高度
+	private float maxBaseHeight;  //棋盘底座的最大高度
 	private float rotateSpeed;    //棋盘的旋转速度（每秒转多少度）
 	private bool canSetChessman;  //是否允许在棋盘上放置或拿掉棋子
 	private Vector3 centerPos;    //棋盘的中心位置
@@ -31,7 +32,8 @@ public class ChessRoot : MonoBehaviour
 		Instance = this;
 
 		cubeSize = 1.2f;
-		baseHeight = 3.3f;
+		curBaseHeight = 0.0f;
+		maxBaseHeight = 3.3f;
 		rotateSpeed = 120.0f;
 		canSetChessman = false;
 		mChessmanInfos = new List<ChessmanInfo>();
@@ -112,7 +114,7 @@ public class ChessRoot : MonoBehaviour
 				//若没有放置棋子,则生成棋子,并添加记录
 				GameObject mChessman = (GameObject)GameObject.Instantiate(chessmanPrefab);
 				float x = cube.transform.position.x;
-				float y = cubeSize / 2.0f + baseHeight;
+				float y = cubeSize / 2.0f + curBaseHeight;
 				float z = cube.transform.position.z;
 				mChessman.transform.position = new Vector3(x, y, z);
 				mChessman.transform.parent = mChessmans.transform;
@@ -181,12 +183,6 @@ public class ChessRoot : MonoBehaviour
             {
                 for (int j = 0; j < answer.Length; j++)
                 {
-if(infos[i] == null)
-	Debug.Log("空指针1： " + i);
-
-if(answer[j] == null)
-	Debug.Log("空指针2： " + j);
-
                     if (infos[i].line == answer[j].line && infos[i].row == answer[j].row)
                     {
                         //找到解集中的一组解与当前解相同
@@ -352,14 +348,15 @@ if(answer[j] == null)
 			mBase.SetActive(true);
 		}
 
+		//根据棋盘规模调节棋盘底座大小
+		float size = 1 - (8 - chessboardSize) * 0.12f;
+		curBaseHeight = size * maxBaseHeight;
+		mBase.transform.localScale = new Vector3 (size, size , size);
+
 		//让棋盘表面位于棋盘底座中央
 		float _chessboardSize = chessboardSize;
 		float surfacePoint = -(cubeSize * _chessboardSize / 2);
-		mSurface.transform.position = new Vector3 (surfacePoint, baseHeight, surfacePoint);
-
-		//根据棋盘规模调节棋盘底座大小
-		float size = 1 - (8 - chessboardSize) * 0.12f;
-		mBase.transform.localScale = new Vector3 (size, 1 , size);
+		mSurface.transform.position = new Vector3 (surfacePoint, curBaseHeight, surfacePoint);
 	}
 
 	/*
@@ -408,7 +405,7 @@ if(answer[j] == null)
 			GameObject cube = FindCubeInChessboard(info.line, info.row);
 
 			float x = cube.transform.position.x;
-			float y = cubeSize / 2.0f + baseHeight;
+			float y = cubeSize / 2.0f + curBaseHeight;
 			float z = cube.transform.position.z;
 
 			chessman.transform.position = new Vector3(x, y, z);

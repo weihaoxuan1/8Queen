@@ -178,11 +178,10 @@ public class ScoreManager : MonoBehaviour
 	}
 
 	/*
-	 * 获取当前用户的最高得分
+	 * 获取当前用户的最高记录
 	 */ 
-	private int GetBestScore(int chessboardSize)
+	private string[] GetBestRecord(int chessboardSize)
 	{
-		//获取文件中的一行信息
 		string line;
 		string path = Application.dataPath + "//" + UserManager.Instance.GetUserDirectory() + "//" +
 			UserManager.Instance.GetCurUser() + "//" + "MyBestRecord_" + chessboardSize;
@@ -195,7 +194,7 @@ public class ScoreManager : MonoBehaviour
 
 		else
 		{
-			return 0;
+			return null;
 		}
 		
 		line = sr.ReadLine ();
@@ -203,20 +202,9 @@ public class ScoreManager : MonoBehaviour
 		sr.Close();
 		sr.Dispose();
 
-		//将信息中的最高得分提取出来
-		int bestScore = 0;
 		string[] elements = line.Split(new char[]{','}, StringSplitOptions.RemoveEmptyEntries);
 
-		if (int.TryParse (elements [0], out bestScore)) 
-		{
-			return bestScore;
-		}
-
-		else
-		{
-			Debug.LogError("Error in parseInt");
-			return -1;
-		}
+		return elements;
 	}
 
 	/*
@@ -336,6 +324,96 @@ public class ScoreManager : MonoBehaviour
 		if (finalScore >= bestScore) 
 		{
 			WriteBestRecord(chessboardSize);
+		}
+	}
+
+	/*
+	 * 获取当前用户的最高得分
+	 */ 
+	public int GetBestScore(int chessboardSize)
+	{
+		int bestScore = 0;
+		string[] elements = GetBestRecord (chessboardSize);
+
+		//存在最高记录
+		if (elements != null) 
+		{
+			if (int.TryParse (elements [0], out bestScore)) 
+			{
+				return bestScore;
+			}
+			
+			else
+			{
+				Debug.LogError("Error in parseInt");
+				return 0;
+			}
+		}
+
+		//不存在最高记录
+		else
+		{
+			return 0;
+		}
+	}
+
+	/*
+	 * 获取当前用户的最高星级评定的全星数量
+	 */ 
+	public int GetBestStarNum(int chessboardSize)
+	{
+		int bestStarNum = 0;
+		string[] elements = GetBestRecord (chessboardSize);
+
+		//存在最高记录
+		if (elements != null) 
+		{
+			if (int.TryParse (elements [1], out bestStarNum)) 
+			{
+				return bestStarNum;
+			}
+			
+			else
+			{
+				Debug.LogError("Error in parseInt");
+				return 0;
+			}
+		}
+		
+		//不存在最高记录
+		else
+		{
+			return 0;
+		}
+	}
+
+	/*
+	 * 获取当前用户的最高星级评定是否需要半星
+	 */ 
+	public bool GetHasHalfStar(int chessboardSize)
+	{
+		bool hasHalfStar = false;
+		string[] elements = GetBestRecord (chessboardSize);
+
+		//存在最高记录
+		if (elements != null) 
+		{
+			if (bool.TryParse (elements [2], out hasHalfStar)) 
+			{
+				return hasHalfStar;
+			}
+			
+			else
+			{
+				Debug.LogError("Error in parseInt");
+				return false;
+			}
+		}
+		
+		//不存在最高记录
+		else
+		{
+			return false;
 		}
 	}
 
