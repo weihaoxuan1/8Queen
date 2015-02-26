@@ -7,10 +7,10 @@ using System.IO;
 public class UserManager : MonoBehaviour 
 {
 	public static UserManager Instance;
-
-	private string curUser;        //当前用户名
+	
 	private string defaultUser;    //系统默认建立的初始用户名
 	private string userDirectory;  //存放所有用户答案信息的文件夹名称
+	private string curUserFile;    //存放当前用户名的文件名称
 
 	UserManager()
 	{
@@ -21,6 +21,7 @@ public class UserManager : MonoBehaviour
 	{
 		defaultUser = "Master";
 		userDirectory = "UserInfo";
+		curUserFile = "CurUser";
 
 		CreateUserDirectory ();
 		ConfireCurUser ();
@@ -53,14 +54,16 @@ public class UserManager : MonoBehaviour
 			CreateUser(defaultUser);
 		}
 
-		//若存在至少一个用户,选择最后一次登录的用户
+		//若存在至少一个用户
 		else
 		{
+			/*
 			int lastAccessIndex = 0;
 
 			//找出最后一次访问的文件夹
-			for(int i=1; i<directories.Length; i++)
+			for(int i=0; i<directories.Length; i++)
 			{
+Debug.Log(path + "//" + directories[i]);
 				DateTime curTime = Directory.GetLastAccessTime(path + "//" + directories[i]);
 				DateTime lastAccessTime = Directory.GetLastAccessTime(path + "//" + directories[lastAccessIndex]);
 
@@ -72,6 +75,33 @@ public class UserManager : MonoBehaviour
 		
 			DirectoryInfo info = new DirectoryInfo(path + "//" + directories[lastAccessIndex]);
 			curUser = info.Name;
+			*/
+
+			string curUser = GetCurUser();
+
+			//文件中没有存放当前用户名,设置当前用户为用户列表中的第一位用户
+			if(curUser == null)
+			{
+				SetCurUser(new DirectoryInfo(path + "//" + directories[0]).Name);
+			}
+
+			else
+			{
+				//检查用户列表中是否含有文件中储放的当前用户名
+				for(int i=0; i<directories.Length; i++)
+				{
+					DirectoryInfo info = new DirectoryInfo(path + "//" + directories[i]);
+					
+					if(curUser == info.Name)
+					{
+						return;
+					}
+				}
+				
+				//若用户列表中没有文件中储放的当前用户名,设置当前用户为用户列表中的第一位用户
+				SetCurUser(new DirectoryInfo(path + "//" + directories[0]).Name);
+			}
+
 		}
 	}
 
@@ -81,13 +111,75 @@ public class UserManager : MonoBehaviour
 	public void CreateUser(string userName)
 	{
 		string path = Application.dataPath + "//" + userDirectory + "//" + userName;
-		
-		if (!Directory.Exists (path)) 
+		Directory.CreateDirectory(path);
+		SetCurUser (userName);
+	}
+
+	/*
+	 * 删除一个用户
+	 */ 
+	public void DeleteUser(string userName)
+	{
+		string path = Application.dataPath + "//" + userDirectory + "//" + userName;
+
+		if (Directory.Exists (path)) 
 		{
-			Directory.CreateDirectory(path);
+			Directory.Delete(path);
+		}
+	}
+
+	/*
+	 * 更改用户名
+	 */ 
+	public void RenameUser(string userName, string newName)
+	{
+		string path = Application.dataPath + "//" + userDirectory + "//" + userName;
+		string newPath = Application.dataPath + "//" + userDirectory + "//" + newName;
+
+		if (Directory.Exists (path) && !Directory.Exists (newPath)) 
+		{
+			Directory.Move(path, newPath);
+		}
+	}
+
+	/*
+	 * 检查用户名是否存在
+	 */ 
+	public bool CheckUserNameExist(string userName)
+	{
+		string path = Application.dataPath + "//" + userDirectory + "//" + userName;
+		
+		if (Directory.Exists (path)) 
+		{
+			return true;
 		}
 
-		curUser = userName;
+		else
+		{
+			return false;
+		}
+	}
+	
+	/*
+	 * 设置当前用户名
+	 */ 
+	public void SetCurUser(string username)
+	{
+		StreamWriter sw;
+		FileInfo fileInfo = new FileInfo (Application.dataPath + "//" + UserManager.Instance.GetUserDirectory() + "//" +
+		                                  curUserFile);
+		
+		//若存在记录文件,将记录文件删除后再重新创建
+		if (fileInfo.Exists) 
+		{
+			fileInfo.Delete();
+		}
+		
+		sw = fileInfo.CreateText ();
+		
+		sw.WriteLine (username);
+		sw.Close ();
+		sw.Dispose ();
 	}
 
 	/*
@@ -95,7 +187,27 @@ public class UserManager : MonoBehaviour
 	 */ 
 	public string GetCurUser()
 	{
-		return curUser;
+		string line;
+		string path = Application.dataPath + "//" + UserManager.Instance.GetUserDirectory () + "//" + curUserFile;
+
+		StreamReader sr = null;
+		
+		if (File.Exists (path)) 
+		{
+			sr = File.OpenText (path);
+		}
+		
+		else
+		{
+			return null;
+		}
+		
+		line = sr.ReadLine ();
+		
+		sr.Close();
+		sr.Dispose();
+
+		return line;
 	}
 
 	/*

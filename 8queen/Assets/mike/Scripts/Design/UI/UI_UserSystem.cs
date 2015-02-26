@@ -21,6 +21,16 @@ public class UI_UserSystem : MonoBehaviour
 		Reset ();
 	}
 
+	void OnDisable()
+	{
+		for (int chessboardSize=4; chessboardSize<=8; chessboardSize++)
+		{
+			Transform achievement = userAchievement.transform.FindChild (chessboardSize + "*" + chessboardSize);
+			StarController starController = achievement.FindChild ("StarController").GetComponent<StarController> ();
+			starController.HideStar ();
+		}
+	}
+
 	void Update () 
 	{
 		if (Input.GetKeyUp(KeyCode.Mouse1))
@@ -55,6 +65,7 @@ public class UI_UserSystem : MonoBehaviour
 		StarController starController = achievement.FindChild ("StarController").GetComponent<StarController> ();
 
 		label_bestScore.text = ScoreManager.Instance.GetBestScore (chessboardSize).ToString();
+		starController.HideStar ();
 		starController.SetStarCount (ScoreManager.Instance.GetBestStarNum(chessboardSize));
 		starController.SetIsHalf (ScoreManager.Instance.GetHasHalfStar(chessboardSize));
 		starController.ShowStar ();

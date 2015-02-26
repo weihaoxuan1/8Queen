@@ -196,6 +196,7 @@
      <Compile Include="Assets\mike\Scripts\Design\UI\UI_Gaming.cs" />
      <Compile Include="Assets\mike\Scripts\Design\UI\UI_PlayerAnswer.cs" />
      <Compile Include="Assets\mike\Scripts\Design\UI\UI_SelectChessboard.cs" />
+     <Compile Include="Assets\mike\Scripts\Design\UI\UI_UserSetting.cs" />
      <Compile Include="Assets\mike\Scripts\Design\UI\UI_UserSystem.cs" />
      <Compile Include="Assets\mike\Scripts\Design\Util\StarController.cs" />
      <Compile Include="Assets\mike\Scripts\Design\Util\StarFade.cs" />
