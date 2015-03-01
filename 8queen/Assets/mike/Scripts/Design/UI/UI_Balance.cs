@@ -37,11 +37,16 @@ public class UI_Balance : MonoBehaviour
 			label_score.text = curScore.ToString ();
 			curScore += 30;
 
-			if(curScore + 30 >= finalScore)
+			if(curScore >= finalScore)
 			{
 				curScore = finalScore;
 				label_score.text = curScore.ToString ();
 				isStartFresh = false;
+
+				//刷新星级评定
+				starController.SetStarCount (ScoreManager.Instance.GetStarNum ());
+				starController.SetIsHalf (ScoreManager.Instance.GetHasHalfStar ());
+				starController.ShowStar ();
 			}
 		}
 	}
@@ -53,11 +58,6 @@ public class UI_Balance : MonoBehaviour
 		curScore = 0;
 		finalScore = ScoreManager.Instance.GetFinalScore ();
 		isStartFresh = true;
-
-		//刷新星级评定
-		starController.SetStarCount (ScoreManager.Instance.GetStarNum ());
-		starController.SetIsHalf (ScoreManager.Instance.GetHasHalfStar ());
-		starController.ShowStar ();
 	}
 
 }

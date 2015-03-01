@@ -21,6 +21,7 @@ public class TweenEffectReset : MonoBehaviour {
         TweenPosition[] position = gameObject.GetComponents<TweenPosition>();
         TweenRotation[] rotation = gameObject.GetComponents<TweenRotation>();
         TweenScale[] scale = gameObject.GetComponents<TweenScale>();
+		TweenWidth[] width = gameObject.GetComponents<TweenWidth> ();
         foreach(TweenAlpha a in alpha)
         {
             a.enabled = true;
@@ -41,6 +42,11 @@ public class TweenEffectReset : MonoBehaviour {
             a.enabled = true;
             a.ResetToBeginning();
         }
+		foreach (TweenWidth a in width)
+		{
+			a.enabled = true;
+			a.ResetToBeginning();
+		}
     }
 
     public void EffectEnd()

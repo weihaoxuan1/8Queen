@@ -8,9 +8,10 @@ public class UserManager : MonoBehaviour
 {
 	public static UserManager Instance;
 	
-	private string defaultUser;    //系统默认建立的初始用户名
-	private string userDirectory;  //存放所有用户答案信息的文件夹名称
-	private string curUserFile;    //存放当前用户名的文件名称
+	private string defaultUser;         //系统默认建立的初始用户名
+	private string defaultUser_delete;  //玩家删除所有用户后系统默认建立的用户名
+	private string userDirectory;       //存放所有用户答案信息的文件夹名称
+	private string curUserFile;         //存放当前用户名的文件名称
 
 	UserManager()
 	{
@@ -20,11 +21,12 @@ public class UserManager : MonoBehaviour
 	void Awake()
 	{
 		defaultUser = "Master";
+		defaultUser_delete = "Defalut";
 		userDirectory = "UserInfo";
 		curUserFile = "CurUser";
 
 		CreateUserDirectory ();
-		ConfireCurUser ();
+		ConfireCurUser (false);
 	}
 
 	/*
@@ -43,7 +45,7 @@ public class UserManager : MonoBehaviour
 	/*
 	 * 确认当前用户
 	 */ 
-	private void ConfireCurUser()
+	private void ConfireCurUser(bool isDelete)
 	{
 		string path = Application.dataPath + "//" + userDirectory;
 		string[] directories = Directory.GetDirectories (path);
@@ -51,32 +53,20 @@ public class UserManager : MonoBehaviour
 		//若不存在任何用户,创建一个初始用户
 		if (directories.Length == 0) 
 		{
-			CreateUser(defaultUser);
+			if(isDelete)
+			{
+				CreateUser(defaultUser_delete);
+			}
+
+			else
+			{
+				CreateUser(defaultUser);
+			}
 		}
 
 		//若存在至少一个用户
 		else
 		{
-			/*
-			int lastAccessIndex = 0;
-
-			//找出最后一次访问的文件夹
-			for(int i=0; i<directories.Length; i++)
-			{
-Debug.Log(path + "//" + directories[i]);
-				DateTime curTime = Directory.GetLastAccessTime(path + "//" + directories[i]);
-				DateTime lastAccessTime = Directory.GetLastAccessTime(path + "//" + directories[lastAccessIndex]);
-
-				if(curTime.CompareTo(lastAccessTime) == 1)
-				{
-					lastAccessIndex = i;
-				}
-			}
-		
-			DirectoryInfo info = new DirectoryInfo(path + "//" + directories[lastAccessIndex]);
-			curUser = info.Name;
-			*/
-
 			string curUser = GetCurUser();
 
 			//文件中没有存放当前用户名,设置当前用户为用户列表中的第一位用户
@@ -124,8 +114,10 @@ Debug.Log(path + "//" + directories[i]);
 
 		if (Directory.Exists (path)) 
 		{
-			Directory.Delete(path);
+			Directory.Delete(path, true);
 		}
+
+		ConfireCurUser (true);
 	}
 
 	/*
@@ -139,6 +131,7 @@ Debug.Log(path + "//" + directories[i]);
 		if (Directory.Exists (path) && !Directory.Exists (newPath)) 
 		{
 			Directory.Move(path, newPath);
+			SetCurUser (newName);
 		}
 	}
 

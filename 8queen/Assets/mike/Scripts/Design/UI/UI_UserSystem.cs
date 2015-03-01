@@ -10,7 +10,7 @@ public class UI_UserSystem : MonoBehaviour
 	{
 		if (label_userName == null) 
 		{
-			label_userName = transform.FindChild ("Text_userName").GetComponent<UILabel>();
+			label_userName = transform.FindChild ("CurUser/Text_userName").GetComponent<UILabel>();
 		}
 
 		if (userAchievement == null) 
@@ -61,10 +61,10 @@ public class UI_UserSystem : MonoBehaviour
 	{
 		Transform achievement = userAchievement.transform.FindChild (chessboardSize + "*" + chessboardSize);
 
-		UILabel label_bestScore = achievement.FindChild ("Text_bestScore").GetComponent<UILabel> ();
+		//UILabel label_bestScore = achievement.FindChild ("Text_bestScore").GetComponent<UILabel> ();
 		StarController starController = achievement.FindChild ("StarController").GetComponent<StarController> ();
 
-		label_bestScore.text = ScoreManager.Instance.GetBestScore (chessboardSize).ToString();
+		//label_bestScore.text = ScoreManager.Instance.GetBestScore (chessboardSize).ToString();
 		starController.HideStar ();
 		starController.SetStarCount (ScoreManager.Instance.GetBestStarNum(chessboardSize));
 		starController.SetIsHalf (ScoreManager.Instance.GetHasHalfStar(chessboardSize));

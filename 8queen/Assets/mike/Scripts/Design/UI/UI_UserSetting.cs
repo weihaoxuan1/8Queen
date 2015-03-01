@@ -139,7 +139,9 @@ public class UI_UserSetting : MonoBehaviour
 		warning_usernameRepeat.SetActive(false);
 
 		UILabel label = rename.transform.FindChild ("Input_rename").GetComponentInChildren<UILabel> ();
+		UIInput input = rename.transform.FindChild ("Input_rename").GetComponent<UIInput> ();
 		label.text = UserBehaviorRecorder.Instance.GetUserChoice ();
+		input.value = UserBehaviorRecorder.Instance.GetUserChoice ();
 	}
 
 	public void ToCreateUser()
@@ -151,6 +153,11 @@ public class UI_UserSetting : MonoBehaviour
 		GameObject warning_usernameRepeat = createUser.transform.FindChild("Warning_usernameRepeat").gameObject;
 		warning_usernameNull.SetActive(false);
 		warning_usernameRepeat.SetActive(false);
+
+		UILabel label = createUser.transform.FindChild ("Input_createUser").GetComponentInChildren<UILabel> ();
+		UIInput input = createUser.transform.FindChild ("Input_createUser").GetComponent<UIInput> ();
+		label.text = "";
+		input.value = "";
 	}
 
 	public void ToDeleteUser()
